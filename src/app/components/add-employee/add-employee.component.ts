@@ -1,5 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Employee } from 'src/app/Employees';
+import { UiService } from 'src/app/sevices/ui.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-employee',
@@ -13,8 +15,12 @@ export class AddEmployeeComponent implements OnInit {
   name : string = '';
   profession : string ='';
   project : boolean = false;
+  showAddEmployee ?: boolean;
+  subscription : Subscription;
 
-  constructor() { }
+  constructor(private uiService : UiService) {
+    this.subscription = this.uiService.ontoggle().subscribe((value)=>(this.showAddEmployee = value));
+   }
 
   ngOnInit(): void {
   }

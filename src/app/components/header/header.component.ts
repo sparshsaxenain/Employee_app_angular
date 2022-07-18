@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UiService } from '../../sevices/ui.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  showAddEmployee: boolean =false;
+  subscription ?: Subscription;
+
+
+  constructor(private uiService: UiService, private router:Router) { 
+    this.subscription = this.uiService.ontoggle().subscribe((value)=>(this.showAddEmployee = value));
+  }
 
   ngOnInit(): void {
+  }
+
+  toggleEmployee(){
+    console.log("toggle");
+    this.uiService.toogleAddEmployee();
+  }
+
+  hasRoute(route: string)
+  {
+    return this.router.url === route;
   }
 
 }
